@@ -12,7 +12,7 @@ import { CommonModule } from '@angular/common';
 import { AuthService } from '../../service/auth.service';
 import { Router } from '@angular/router';
 import { MatCard } from '@angular/material/card';
-import { Subscription } from 'rxjs';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-login',
@@ -25,6 +25,7 @@ import { Subscription } from 'rxjs';
     MatLabel,
     ReactiveFormsModule,
     MatCard,
+    MatButtonModule,
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
@@ -36,7 +37,7 @@ export class LoginComponent {
 
   errorMessage: string | null = null;
   loginForm: FormGroup = this.fb.nonNullable.group({
-    email: ['', [(Validators.required, Validators.email)]],
+    email: ['', [Validators.required, Validators.email]],
     password: ['', Validators.required],
   });
 
