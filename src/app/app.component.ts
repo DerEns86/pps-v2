@@ -1,5 +1,5 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { Router, RouterOutlet } from '@angular/router';
 import { AuthService } from './service/auth.service';
 import { Subscription } from 'rxjs';
 
@@ -10,8 +10,9 @@ import { Subscription } from 'rxjs';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
-export class AppComponent implements OnInit {
-  authService = inject(AuthService);
+export class AppComponent implements OnInit, OnDestroy {
+  authService: AuthService = inject(AuthService);
+  router: Router = inject(Router);
   userSubscribtion!: Subscription;
   title = 'pps-v2';
 
@@ -19,6 +20,7 @@ export class AppComponent implements OnInit {
     this.userSubscribtion = this.authService.user$.subscribe((user: any) => {
       if (user) {
         this.authService.currentUserSig.set({
+          uid: user.uid,
           email: user.email,
           username: user.displayName,
         });
@@ -27,5 +29,15 @@ export class AppComponent implements OnInit {
       }
       console.log(this.authService.currentUserSig());
     });
+  }
+
+  ngOnDestroy(): void {
+    this.userSubscribtion.unsubscribe();
+  }
+
+  logout() {
+    this.authService
+      .logout()
+      .subscribe(() => this.router.navigateByUrl('/login'));
   }
 }

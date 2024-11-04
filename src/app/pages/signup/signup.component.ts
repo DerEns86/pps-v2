@@ -46,7 +46,7 @@ export class SignupComponent {
       .register(rawData.email, rawData.username, rawData.password)
       .subscribe({
         next: () => {
-          this.router.navigateByUrl('/');
+          this.router.navigateByUrl('/dashboard');
         },
         error: (err) => {
           this.errorMessage = err.code;

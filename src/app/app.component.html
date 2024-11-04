@@ -1,2 +1,4 @@
-
+@if (authService.currentUserSig()?.uid){
+<button mat-raised-button (click)="logout()">Logout</button>
+}
 <router-outlet />

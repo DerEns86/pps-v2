@@ -11,6 +11,8 @@ import { MatInput } from '@angular/material/input';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../service/auth.service';
 import { Router } from '@angular/router';
+import { MatCard } from '@angular/material/card';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -22,6 +24,7 @@ import { Router } from '@angular/router';
     MatInput,
     MatLabel,
     ReactiveFormsModule,
+    MatCard,
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
@@ -33,7 +36,7 @@ export class LoginComponent {
 
   errorMessage: string | null = null;
   loginForm: FormGroup = this.fb.nonNullable.group({
-    email: ['', Validators.required],
+    email: ['', [(Validators.required, Validators.email)]],
     password: ['', Validators.required],
   });
 
@@ -42,12 +45,29 @@ export class LoginComponent {
     // console.log(rawData);
     this.authService.login(rawData.email, rawData.password).subscribe({
       next: () => {
-        this.router.navigateByUrl('/');
+        this.router.navigateByUrl('/dashboard');
       },
       error: (err) => {
         this.errorMessage = err.code;
         // console.log(err.code);
       },
     });
+    this.loginForm.reset();
+    this.loginForm.markAsUntouched();
+    this.loginForm.markAsPristine();
+  }
+
+  registerWithGoogle() {
+    console.log('registered with google');
+    this.authService
+      .registerGoogle()
+      .subscribe(() => this.router.navigateByUrl('/dashboard'));
+  }
+
+  registerWithGithub() {
+    console.log('registered with github');
+    this.authService
+      .registerGithub()
+      .subscribe(() => this.router.navigateByUrl('/dashboard'));
   }
 }

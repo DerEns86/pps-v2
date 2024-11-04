@@ -1,5 +1,7 @@
 <h2>Login</h2>
+<section class="flex-center">
 
+  <mat-card appearance="raised">
 @if (errorMessage){
   <div>{{errorMessage}}</div>
 }
@@ -15,6 +17,10 @@
     <input matInput formControlName="password">
   </mat-form-field>
 
-  <button mat-raised-button color="primary" type="submit">Signup</button>
+  <button mat-raised-button color="primary" type="submit">Login</button>
 </form>
+  </mat-card>
+</section>
 
+<button mat-raised-button color="primary" (click)="registerWithGoogle()">Login with Google</button>
+<button mat-raised-button color="primary" (click)="registerWithGithub()">Login with Github</button>
