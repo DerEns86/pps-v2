@@ -1,0 +1,68 @@
+mat-card {
+  padding: 24px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+
+  button {
+    margin-top: 16px;
+  }
+}
+
+.google-icon {
+  background: url("/google.png");
+}
+
+.github-icon {
+  background: url("/github.png");
+}
+
+.social-icon {
+  background-size: cover;
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+  margin-right: 8px;
+}
+
+.social-button {
+  display: flex;
+  align-items: center;
+}
+
+.divider {
+  margin: 0 12px;
+  color: grey;
+
+  span {
+    margin-inline: 6px;
+  }
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid grey;
+}
+
+.create-account {
+  font-size: 0.75rem;
+
+  span {
+    cursor: pointer;
+    color: #005cbb;
+    font-weight: 600;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+
