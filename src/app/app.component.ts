@@ -15,7 +15,7 @@ export class AppComponent implements OnInit, OnDestroy {
   authService: AuthService = inject(AuthService);
   router: Router = inject(Router);
   userSubscribtion!: Subscription;
-  title = 'pps-v2';
+  title = 'PPS-v2';
 
   ngOnInit(): void {
     this.userSubscribtion = this.authService.user$.subscribe((user: any) => {

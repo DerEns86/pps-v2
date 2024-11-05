@@ -9,7 +9,7 @@ import {
   User,
   user,
 } from '@angular/fire/auth';
-import { from, Observable } from 'rxjs';
+import { catchError, from, Observable, throwError } from 'rxjs';
 import { UserInterface } from '../model/user.interface';
 import { GoogleAuthProvider } from 'firebase/auth';
 import { GithubAuthProvider } from 'firebase/auth';
@@ -46,12 +46,19 @@ export class AuthService {
       this.firebaseAuth,
       email,
       password,
-    )
-      .then(() => {
-        console.log(this.currentUserSig());
-      })
-      .catch(() => {});
-    return from(promise);
+    ).then(() => {
+      console.log(this.currentUserSig());
+    });
+    return from(promise).pipe(
+      catchError((error) => {
+        return throwError(
+          () =>
+            new Error(
+              `Authentication failed. Please check your credentials. ${error.message}`,
+            ),
+        );
+      }),
+    );
   }
 
   logout(): Observable<void> {
