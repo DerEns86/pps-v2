@@ -1,4 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
+$primary: #005cbb;
 
 @mixin flex-center($direction: row) {
   display: flex;
@@ -7,11 +8,11 @@
   flex-direction: $direction !important;
 }
 
-.flex-center-row{
+.flex-center-row {
   @include flex-center();
 }
 
-.flex-column{
+.flex-column {
   @include flex-center(column);
 }
 
@@ -19,9 +20,45 @@ html,
 body {
   height: 100%;
 }
+
 body {
   margin: 0;
   padding: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
   box-sizing: border-box;
+}
+
+header {
+  mat-toolbar {
+    height: 64px !important;
+    background-color: $primary !important;
+  }
+
+  mat-icon {
+    color: white;
+  }
+
+  .spacer {
+    flex: 1 1 auto;
+  }
+}
+
+main {
+  height: calc(100% - 64px);
+
+  mat-drawer-container {
+    height: 100%;
+  }
+
+  .router-container {
+    padding-top: 16px;
+    padding-inline: 56px;
+  }
+}
+
+aside {
+  height: 100%;
+  border-right: #e0e0e0 1px solid;
+  background-color: white;
+
 }
