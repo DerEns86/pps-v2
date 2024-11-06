@@ -37,8 +37,13 @@ export class AuthService {
     ).then((response) =>
       updateProfile(response.user, { displayName: username }),
     );
-
-    return from(promise);
+    return from(promise).pipe(
+      catchError((error) => {
+        return throwError(
+          () => new Error(`Registration failed. ${error.message}`),
+        );
+      }),
+    );
   }
 
   login(email: string, password: string): Observable<void> {
