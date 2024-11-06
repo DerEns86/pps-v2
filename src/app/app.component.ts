@@ -1,5 +1,10 @@
 import { Component, inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Router, RouterLink, RouterOutlet } from '@angular/router';
+import {
+  Router,
+  RouterLink,
+  RouterLinkActive,
+  RouterOutlet,
+} from '@angular/router';
 import { AuthService } from './service/auth.service';
 import { Subscription } from 'rxjs';
 import { MatButtonModule } from '@angular/material/button';
@@ -12,7 +17,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { MatDivider, MatDividerModule } from '@angular/material/divider';
+import { MatDivider } from '@angular/material/divider';
 
 @Component({
   selector: 'app-root',
@@ -26,6 +31,7 @@ import { MatDivider, MatDividerModule } from '@angular/material/divider';
     MatToolbarModule,
     MatDivider,
     RouterLink,
+    RouterLinkActive,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',

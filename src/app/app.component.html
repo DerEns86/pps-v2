@@ -25,19 +25,19 @@
     >
       <aside>
         <ul>
-          <li [routerLink]="['dashboard']" (click)="closeDrawer()">
+          <li [routerLink]="['dashboard']" routerLinkActive="active" (click)="closeDrawer()">
             <mat-icon>space_dashboard</mat-icon>
             Dashboard
           </li>
-          <li [routerLink]="['projects']" (click)="closeDrawer()">
+          <li [routerLink]="['projects']" routerLinkActive="active" (click)="closeDrawer()">
             <mat-icon>assignment</mat-icon>
             Projects
           </li>
-          <li [routerLink]="['employees']" (click)="closeDrawer()">
+          <li [routerLink]="['employees']" routerLinkActive="active" (click)="closeDrawer()">
             <mat-icon>account_circle</mat-icon>
             Employees
           </li>
-          <li [routerLink]="['machine-park']" (click)="closeDrawer()">
+          <li [routerLink]="['machine-park']" routerLinkActive="active" (click)="closeDrawer()">
             <mat-icon>precision_manufacturing</mat-icon>
             Machine Park
           </li>
