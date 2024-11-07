@@ -1,6 +1,6 @@
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { AppComponent } from './app.component';
-import { AuthService } from './services/auth.service';
+import { AuthService } from './services/auth/auth.service';
 import { of } from 'rxjs';
 import { provideRouter } from '@angular/router';
 import { MatSidenavModule } from '@angular/material/sidenav';

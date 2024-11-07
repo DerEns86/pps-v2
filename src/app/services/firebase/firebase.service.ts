@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { doc, Firestore, setDoc } from '@angular/fire/firestore';
-import { UserInterface } from '../model/user.interface';
+import { UserInterface } from '../../model/user.interface';
 import { from, Observable } from 'rxjs';
 
 @Injectable({

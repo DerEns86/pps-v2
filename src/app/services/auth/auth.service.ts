@@ -10,10 +10,10 @@ import {
   user,
 } from '@angular/fire/auth';
 import { catchError, from, Observable, throwError } from 'rxjs';
-import { UserInterface } from '../model/user.interface';
+import { UserInterface } from '../../model/user.interface';
 import { GoogleAuthProvider } from 'firebase/auth';
 import { GithubAuthProvider } from 'firebase/auth';
-import { FirebaseService } from './firebase.service';
+import { FirebaseService } from '../firebase/firebase.service';
 
 @Injectable({
   providedIn: 'root',
