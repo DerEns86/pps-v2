@@ -5,12 +5,7 @@ import { FirebaseService } from '../firebase/firebase.service';
 import { Firestore } from '@angular/fire/firestore';
 
 const mockFirebaseService = {};
-const mockFirestore = {
-  collection: jasmine.createSpy('collection'),
-  collectionData: jasmine.createSpy('collectionData'),
-  setDoc: jasmine.createSpy('setDoc'),
-  getCollection: jasmine.createSpy('getCollection'),
-};
+// const mockFirestore = {};
 
 describe('EmployeeService', () => {
   let service: EmployeeService;
@@ -19,7 +14,7 @@ describe('EmployeeService', () => {
     TestBed.configureTestingModule({
       providers: [
         { provide: FirebaseService, useValue: mockFirebaseService },
-        { provide: Firestore, useValue: mockFirestore },
+        // { provide: Firestore, useValue: mockFirestore },
       ],
     });
     service = TestBed.inject(EmployeeService);
