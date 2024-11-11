@@ -9,7 +9,15 @@ describe('EmployeeComponent', () => {
   let fixture: ComponentFixture<EmployeeComponent>;
 
   const mockFirebaseService = {
-    getAll: jasmine.createSpy('getAll').and.returnValue(of([])), // Mock implementation
+    getAll: jasmine.createSpy('getAll').and.returnValue(
+      of([
+        {
+          id: '1',
+          firstname: 'John Doe',
+          email: 'john@doe.com',
+        },
+      ]),
+    ), // Mock implementation
   };
 
   beforeEach(async () => {
@@ -30,5 +38,11 @@ describe('EmployeeComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should get all employees', () => {
+    component.ngOnInit();
+    expect(mockFirebaseService.getAll).toHaveBeenCalled();
+    expect(component.employees$).toBeTruthy();
   });
 });

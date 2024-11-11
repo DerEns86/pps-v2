@@ -1,5 +1,5 @@
 import { inject, Injectable, OnInit } from '@angular/core';
-import { BehaviorSubject, map } from 'rxjs';
+import { BehaviorSubject, map, Observable } from 'rxjs';
 import { EmployeeInterface } from '../../model/employee.interface';
 import { FirebaseService } from '../firebase/firebase.service';
 
@@ -24,21 +24,14 @@ export class EmployeeService implements OnInit {
       });
   }
 
-  addEmployee(): void {
+  addEmployee(employee: EmployeeInterface): void {
     this.firebaseService
-      .add<EmployeeInterface>('employees', {
-        id: '2',
-        employeeNumber: '2',
-        firstName: 'foo',
-        lastName: 'bar',
-        email: 'foo@bar.com',
-        assignedMachine: 'mill',
-        skills: ['test', 'test', 'test3'],
-      })
+      .add<EmployeeInterface>('employees', employee)
       .subscribe({
         next: (employee) => {
           this.firebaseService.update('employees', employee.id, {
             id: employee.id,
+            assignedMachine: '',
           });
           console.log('Employee added:', employee);
         },
@@ -48,16 +41,34 @@ export class EmployeeService implements OnInit {
       });
   }
 
-  //Works
-  // addEmployee(): void {
-  //   this.firebaseService.add<EmployeeInterface>('employees', {
-  //     id: '2',
-  //     employeeNumber: '2',
-  //     firstName: 'foo',
-  //     lastName: 'bar',
-  //     email: 'foo@bar.com',
-  //     assignedMachine: 'mill',
-  //     skills: ['test', 'test', 'test3'],
-  //   });
-  // }
+  getSingleEmployee(docId: string): Observable<EmployeeInterface | null> {
+    return this.firebaseService
+      .getSingle<EmployeeInterface>('employees', docId)
+      .pipe(
+        map((emp) => {
+          if (emp === null) {
+            throw new Error('Employee not found');
+          }
+          return emp;
+        }),
+      );
+  }
+
+  updateEmployee(docId: string, employee: EmployeeInterface): void {
+    this.firebaseService.update('employees', docId, employee).subscribe({
+      next: () => console.log(`Employee ${docId} updated successfully`),
+      error: (err) => console.error(`Failed to update employee ${docId}:`, err),
+    });
+  }
+
+  deleteEmployee(docId: string): void {
+    this.firebaseService
+      .delete<EmployeeInterface>('employees', docId)
+      .subscribe({
+        error: (err) => {
+          throw new Error(err);
+        },
+        complete: () => console.log('delete done'),
+      });
+  }
 }

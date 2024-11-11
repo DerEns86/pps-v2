@@ -8,6 +8,8 @@ import {
   setDoc,
   CollectionReference,
   updateDoc,
+  getDoc,
+  deleteDoc,
 } from '@angular/fire/firestore';
 import { UserInterface } from '../../model/user.interface';
 import { from, Observable } from 'rxjs';
@@ -25,34 +27,43 @@ export class FirebaseService {
     return from(promise);
   }
 
-  getCollection<T>(collectionName: string): CollectionReference<T> {
+  getCollectionRef<T>(collectionName: string): CollectionReference<T> {
     return collection(this.firestore, collectionName) as CollectionReference<T>;
   }
 
-  // getAll(collectionName: string): Observable<any[]> {
-  //   return collectionData(this.getCollection(collectionName), {
-  //     idField: 'id',
-  //   }) as Observable<any[]>;
-  // }
-
   getAll<T>(collectionName: string): Observable<T[]> {
-    return collectionData(this.getCollection(collectionName), {
+    return collectionData(this.getCollectionRef(collectionName), {
       idField: 'id',
     }) as Observable<T[]>;
   }
 
-  getSingle<T>(collectionName: string, docId: string) {
-    return doc(this.getCollection(collectionName), docId);
+  getSingle<T>(collectionName: string, docId: string): Observable<T | null> {
+    const documentRef = doc(this.getCollectionRef(collectionName), docId);
+    return from(
+      getDoc(documentRef).then((documentSnapshot) => {
+        if (documentSnapshot.exists()) {
+          return documentSnapshot.data() as T;
+        } else {
+          return null;
+        }
+      }),
+    );
   }
 
   add<T>(collectionName: string, obj: T): Observable<T> {
-    const promise = addDoc(this.getCollection(collectionName), obj);
+    const promise = addDoc(this.getCollectionRef(collectionName), obj);
     return from(promise) as Observable<T>;
   }
 
-  update<T>(colName: string, docId: string, obj: T): Observable<void> {
-    const docRef = doc(this.getCollection<T>(colName), docId);
+  update<T>(collectionName: string, docId: string, obj: T): Observable<void> {
+    const docRef = doc(this.getCollectionRef<T>(collectionName), docId);
     const promise = updateDoc(docRef, obj as Partial<T>);
+    return from(promise);
+  }
+
+  delete<T>(collectionName: string, docId: string): Observable<void> {
+    const docRef = doc(this.getCollectionRef<T>(collectionName), docId);
+    const promise = deleteDoc(docRef);
     return from(promise);
   }
 }

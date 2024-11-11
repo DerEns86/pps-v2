@@ -1,6 +1,6 @@
 <p>employee works!</p>
 
-<button mat-flat-button (click)="addEmployee()">Add</button>
+<button mat-flat-button (click)="onAddEmployee()">Add</button>
 
 @if (employees$ | async; as employees){
   @for (employee of employees; track employee.id){
@@ -18,6 +18,7 @@
      }
      <p>{{employee.id}}</p>
        </mat-card-content>
+     <button mat-button color="warn" (click)="onEdit(employee)">Edit</button>
    </mat-card>
   }
 }
