@@ -32,12 +32,12 @@ import { MatButtonModule } from '@angular/material/button';
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.scss',
 })
-export class SignupComponent implements OnInit, OnDestroy {
+export class SignupComponent implements OnInit {
   authService: AuthService = inject(AuthService);
   fb: FormBuilder = inject(FormBuilder);
   router: Router = inject(Router);
 
-  signupForm: FormGroup;
+  signupForm!: FormGroup;
   errorMessage: string | null = null;
 
   ngOnInit(): void {
