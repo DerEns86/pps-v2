@@ -1,5 +1,9 @@
 <p>Signup</p>
 
+@if (errorMessage) {
+  <div>{{ errorMessage }}</div>
+}
+
 <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
   <mat-form-field>
     <mat-label>Username</mat-label>
@@ -18,6 +22,3 @@
 
   <button mat-raised-button color="primary" type="submit">Signup</button>
 </form>
-<button mat-raised-button color="primary" (click)="onGoogleSignup()">
-  Signup with google
-</button>
