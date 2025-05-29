@@ -7,6 +7,7 @@ import { EmployeeComponent } from './components/employee/employee.component';
 import { EmployeeFormComponent } from './components/employee/form/employee-form.component';
 
 export const routes: Routes = [
+  { path: '', component: DashboardComponent, canActivate: [authGuard] },
   { path: 'signup', component: SignupComponent },
   { path: 'login', component: LoginComponent },
   {

@@ -17,11 +17,14 @@ export class EmployeeService implements OnInit {
   }
 
   loadEmployees(): void {
-    this.firebaseService
-      .getAll<EmployeeInterface>('employees')
-      .subscribe((employees: EmployeeInterface[]) => {
-        this.employeesSubject.next(employees);
-      });
+    if (this.employeesSubject.getValue().length === 0) {
+      this.firebaseService
+        .getAll<EmployeeInterface>('employees')
+        .subscribe((employees: EmployeeInterface[]) => {
+          this.employeesSubject.next(employees);
+          console.log('getall fired');
+        });
+    }
   }
 
   addEmployee(employee: EmployeeInterface): void {

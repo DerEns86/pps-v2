@@ -59,8 +59,12 @@ export class AuthService {
       this.firebaseAuth,
       email,
       password,
-    ).then(() => {
+    ).then((user) => {
       console.log(this.currentUserSig());
+      const token = user.user?.getIdToken();
+      token?.then((token) => {
+        localStorage.setItem('token', token);
+      });
     });
     return from(promise).pipe(
       catchError((error) => {
@@ -77,6 +81,7 @@ export class AuthService {
   logout(): Observable<void> {
     const promise = signOut(this.firebaseAuth);
     this.currentUserSig.update(() => null);
+    localStorage.removeItem('token');
     return from(promise);
   }
 
@@ -87,10 +92,12 @@ export class AuthService {
         const credential = GoogleAuthProvider.credentialFromResult(result);
         if (credential) {
           const token = credential.accessToken;
+          if (token) {
+            localStorage.setItem('token', token);
+          }
         }
         // The signed-in user info.
         const user = result.user;
-
         this.firebaseService.addUser({
           uid: user.uid,
           email: user.email!,
@@ -119,6 +126,9 @@ export class AuthService {
         const credential = GithubAuthProvider.credentialFromResult(result);
         if (credential) {
           const token = credential.accessToken;
+          if (token) {
+            localStorage.setItem('token', token);
+          }
         }
         // The signed-in user info.
         const user = result.user;
