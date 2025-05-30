@@ -1,17 +1,6 @@
-
 import { Component, inject } from '@angular/core';
 import { MatInput } from '@angular/material/input';
 import { MatError, MatFormField, MatLabel } from '@angular/material/form-field';
-
-import {
-  ChangeDetectionStrategy,
-  Component,
-  inject,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
 
 import {
   FormBuilder,
@@ -21,10 +10,10 @@ import {
   Validators,
 } from '@angular/forms';
 import { AuthService } from '../../services/auth/auth.service';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
-import { MatCard, MatCardActions } from '@angular/material/card';
+import { MatCard } from '@angular/material/card';
 
 @Component({
   selector: 'app-signup',
@@ -39,17 +28,14 @@ import { MatCard, MatCardActions } from '@angular/material/card';
     MatCard,
     MatButtonModule,
     MatError,
-    MatCardActions,
-    RouterLink,
   ],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.scss',
 })
-export class SignupComponent implements OnInit {
+export class SignupComponent {
   authService: AuthService = inject(AuthService);
   fb: FormBuilder = inject(FormBuilder);
   router: Router = inject(Router);
-
 
   errorMessage: string | null = null;
 
