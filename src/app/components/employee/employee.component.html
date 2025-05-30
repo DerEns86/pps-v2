@@ -1,0 +1,24 @@
+<p>employee works!</p>
+
+<button mat-flat-button (click)="onAddEmployee()">Add</button>
+
+@if (employees$ | async; as employees){
+  @for (employee of employees; track employee.id){
+   <mat-card>
+   <mat-card-header>{{employee.lastName}}, {{employee.firstName}}</mat-card-header>
+   <mat-card-content>
+
+    <p>{{employee.employeeNumber}}</p>
+    <p>{{employee.email}}</p>
+    <p>{{employee.assignedMachine}}</p>
+     @for (skill of employee.skills; track $index){
+
+         <span>{{skill}},</span>
+
+     }
+     <p>{{employee.id}}</p>
+       </mat-card-content>
+     <button mat-button color="warn" (click)="onEdit(employee)">Edit</button>
+   </mat-card>
+  }
+}

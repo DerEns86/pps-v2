@@ -1,8 +1,10 @@
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { AppComponent } from './app.component';
-import { AuthService } from './service/auth.service';
+import { AuthService } from './services/auth/auth.service';
 import { of } from 'rxjs';
 import { provideRouter } from '@angular/router';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 const mockAuthService = {
   user$: of({
@@ -18,7 +20,7 @@ mockAuthService.currentUserSig.set = jasmine.createSpy('set');
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AppComponent],
+      imports: [AppComponent, MatSidenavModule, BrowserAnimationsModule],
       providers: [
         { provide: AuthService, useValue: mockAuthService },
         provideRouter([]),

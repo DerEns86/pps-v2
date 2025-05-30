@@ -1,0 +1,40 @@
+<div (click)="onNavigateBack()">
+  <mat-icon>arrow_back</mat-icon>
+  Back
+</div>
+
+<form [formGroup]="employeeForm" (ngSubmit)="currentEmployeeId === undefined ? onSubmit(): onUpdateEmployee()"
+      #form="ngForm">
+  <div class="form">
+    <mat-form-field appearance="outline">
+      <mat-label>Personal-Number</mat-label>
+      <input matInput name="employeeNumber" id="employeeNumber" formControlName="employeeNumber" required>
+
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Last Name</mat-label>
+      <input matInput name="lastName" id="lastName" formControlName="lastName" required>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>First Name</mat-label>
+      <input matInput name="firstName" id="firstName" formControlName="firstName" required>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>E-mail</mat-label>
+      <input matInput name="email" id="email" formControlName="email" required>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Skills</mat-label>
+      <mat-select formControlName="skills" multiple>
+        @for (skill of skillList; track skill; let i = $index) {
+          <mat-option [value]="skill">{{ skill }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <button mat-flat-button type="submit">{{ currentEmployeeId === undefined ? 'Add' : 'Save' }}</button>
+  @if (currentEmployeeId !== undefined) {
+    <button mat-flat-button color="warn" (click)="onDeleteEmployee()">Delete</button>
+  }
+</form>

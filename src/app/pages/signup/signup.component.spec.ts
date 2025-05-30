@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SignupComponent } from './signup.component';
 import { provideRouter } from '@angular/router';
-import { AuthService } from '../../service/auth.service';
+import { AuthService } from '../../services/auth/auth.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('SignupComponent', () => {

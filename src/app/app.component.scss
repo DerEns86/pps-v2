@@ -1,0 +1,25 @@
+
+.sidenav {
+  width: 200px;
+
+  ul {
+    list-style-type: none;
+    padding-inline: 0;
+    margin: 0;
+    padding-top: 8px;
+
+    li {
+      height: 32px;
+      display: flex;
+      align-items: center;
+      padding-inline: 16px;
+      cursor: pointer;
+      margin-bottom: 16px;
+      gap: 16px;
+
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.05);
+      }
+    }
+  }
+}

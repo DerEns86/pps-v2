@@ -10,15 +10,17 @@ import {
   user,
 } from '@angular/fire/auth';
 import { catchError, from, Observable, throwError } from 'rxjs';
-import { UserInterface } from '../model/user.interface';
+import { UserInterface } from '../../model/user.interface';
 import { GoogleAuthProvider } from 'firebase/auth';
 import { GithubAuthProvider } from 'firebase/auth';
+import { FirebaseService } from '../firebase/firebase.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   firebaseAuth = inject(Auth);
+  firebaseService = inject(FirebaseService);
   user$: Observable<User | null> = user(this.firebaseAuth);
   currentUserSig = signal<UserInterface | null | undefined>(undefined);
 
@@ -34,11 +36,22 @@ export class AuthService {
       this.firebaseAuth,
       email,
       password,
-    ).then((response) =>
-      updateProfile(response.user, { displayName: username }),
+    ).then((response) => {
+      updateProfile(response.user, { displayName: username }).then(() => {
+        this.firebaseService.addUser({
+          uid: response.user.uid,
+          email: response.user.email!,
+          username: username,
+        });
+      });
+    });
+    return from(promise).pipe(
+      catchError((error) => {
+        return throwError(
+          () => new Error(`Registration failed. ${error.message}`),
+        );
+      }),
     );
-
-    return from(promise);
   }
 
   login(email: string, password: string): Observable<void> {
@@ -46,8 +59,12 @@ export class AuthService {
       this.firebaseAuth,
       email,
       password,
-    ).then(() => {
+    ).then((user) => {
       console.log(this.currentUserSig());
+      const token = user.user?.getIdToken();
+      token?.then((token) => {
+        localStorage.setItem('token', token);
+      });
     });
     return from(promise).pipe(
       catchError((error) => {
@@ -64,6 +81,7 @@ export class AuthService {
   logout(): Observable<void> {
     const promise = signOut(this.firebaseAuth);
     this.currentUserSig.update(() => null);
+    localStorage.removeItem('token');
     return from(promise);
   }
 
@@ -74,12 +92,19 @@ export class AuthService {
         const credential = GoogleAuthProvider.credentialFromResult(result);
         if (credential) {
           const token = credential.accessToken;
+          if (token) {
+            localStorage.setItem('token', token);
+          }
         }
         // The signed-in user info.
         const user = result.user;
+        this.firebaseService.addUser({
+          uid: user.uid,
+          email: user.email!,
+          username: user.displayName!,
+        });
         // IdP data available using getAdditionalUserInfo(result)
         // ...
-        console.log('check: ', this.currentUserSig()?.uid);
       })
       .catch((error) => {
         // Handle Errors here.
@@ -101,11 +126,18 @@ export class AuthService {
         const credential = GithubAuthProvider.credentialFromResult(result);
         if (credential) {
           const token = credential.accessToken;
+          if (token) {
+            localStorage.setItem('token', token);
+          }
         }
         // The signed-in user info.
         const user = result.user;
         // IdP data available using getAdditionalUserInfo(result)
-        // ...
+        this.firebaseService.addUser({
+          uid: user.uid,
+          email: user.email!,
+          username: user.displayName!,
+        });
       })
       .catch((error) => {
         // Handle Errors here.

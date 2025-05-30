@@ -1,24 +1,35 @@
-<p>Signup</p>
+<section class="flex-center flex-column">
+  <p>Signup</p>
 
-@if (errorMessage) {
-  <div>{{ errorMessage }}</div>
-}
 
-<form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
-  <mat-form-field>
-    <mat-label>Username</mat-label>
-    <input matInput formControlName="username" />
-  </mat-form-field>
+  <mat-card appearance="raised">
+    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+      <mat-form-field>
+        <mat-label>Username</mat-label>
+        <input matInput formControlName="username" type="text">
+      </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>Email</mat-label>
-    <input matInput formControlName="email" />
-  </mat-form-field>
+      <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" type="email">
+        <mat-error *ngIf="signupForm.get('email')?.invalid && signupForm.get('email')?.touched">
+          Please provide a valid email address
+        </mat-error>
+      </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>Password</mat-label>
-    <input matInput formControlName="password" />
-  </mat-form-field>
+      <mat-form-field>
+        <mat-label>Password</mat-label>
+        <input matInput formControlName="password" type="password">
+        <mat-error *ngIf="signupForm.get('password')?.invalid && signupForm.get('password')?.touched">
+          Please provide a valid password
+        </mat-error>
+      </mat-form-field>
 
-  <button mat-raised-button color="primary" type="submit">Signup</button>
-</form>
+      <button mat-raised-button color="primary" type="submit">Signup</button>
+    </form>
+  </mat-card>
+  @if (errorMessage) {
+    <div style="color: #C21A1A">{{ errorMessage }}</div>
+  }
+</section>
+
