@@ -1,6 +1,18 @@
+
 import { Component, inject } from '@angular/core';
 import { MatInput } from '@angular/material/input';
 import { MatError, MatFormField, MatLabel } from '@angular/material/form-field';
+
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+
 import {
   FormBuilder,
   FormGroup,
@@ -33,10 +45,11 @@ import { MatCard, MatCardActions } from '@angular/material/card';
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.scss',
 })
-export class SignupComponent {
+export class SignupComponent implements OnInit {
   authService: AuthService = inject(AuthService);
   fb: FormBuilder = inject(FormBuilder);
   router: Router = inject(Router);
+
 
   errorMessage: string | null = null;
 
